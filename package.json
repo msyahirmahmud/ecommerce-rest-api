@@ -1,0 +1,12 @@
+{
+  "name": "ecommerce-rest-api",
+  "version": "1.0.0",
+  "description": "RESTful E-Commerce Microservice API with JWT authentication and product catalog management",
+  "main": "server.js",
+  "scripts": {
+    "test": "node --test tests/api.test.js",
+    "start": "node server.js"
+  },
+  "author": "Syahir Mahmud",
+  "license": "MIT"
+}
