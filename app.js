@@ -2,14 +2,14 @@
  * E-Commerce REST API Core Service Module
  */
 
-const http = require('http');
-
 class ECommerceService {
   constructor() {
     this.products = [
       { id: 1, name: "Developer Mechanical Keyboard", category: "Electronics", price: 129.99, stock: 45 },
       { id: 2, name: "Ergonomic Desk Chair", category: "Furniture", price: 299.00, stock: 12 },
-      { id: 3, name: "Wireless Noise-Canceling Headphones", category: "Electronics", price: 199.50, stock: 30 }
+      { id: 3, name: "Wireless Noise-Canceling Headphones", category: "Electronics", price: 199.50, stock: 30 },
+      { id: 4, name: "Ultra-Wide Monitor 34-inch", category: "Electronics", price: 549.99, stock: 8 },
+      { id: 5, name: "Adjustable Standing Desk", category: "Furniture", price: 420.00, stock: 15 }
     ];
     this.users = [
       { id: 1, email: "admin@example.com", password: "password123", token: "jwt-token-admin-secret" }
@@ -17,9 +17,22 @@ class ECommerceService {
     this.carts = {}; // userId -> items
   }
 
-  getProducts(category = null) {
-    if (!category) return this.products;
-    return this.products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+  getProducts(category = null, page = 1, limit = 10) {
+    let filtered = this.products;
+    if (category) {
+      filtered = filtered.filter(p => p.category.toLowerCase() === category.toLowerCase());
+    }
+
+    const startIndex = (page - 1) * limit;
+    const paginated = filtered.slice(startIndex, startIndex + limit);
+
+    return {
+      total: filtered.length,
+      page,
+      limit,
+      totalPages: Math.ceil(filtered.length / limit),
+      data: paginated
+    };
   }
 
   getProductById(id) {

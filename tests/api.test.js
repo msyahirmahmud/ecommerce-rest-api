@@ -3,16 +3,18 @@ const { test, describe } = require('node:test');
 const ECommerceService = require('../app.js');
 
 describe('E-Commerce REST API Unit Tests', () => {
-  test('getProducts lists all catalog items', () => {
+  test('getProducts returns paginated product catalog', () => {
     const service = new ECommerceService();
-    const products = service.getProducts();
-    assert.strictEqual(products.length, 3);
+    const res = service.getProducts(null, 1, 2);
+    assert.strictEqual(res.total, 5);
+    assert.strictEqual(res.data.length, 2);
+    assert.strictEqual(res.totalPages, 3);
   });
 
   test('getProducts filters by category', () => {
     const service = new ECommerceService();
     const electronics = service.getProducts('Electronics');
-    assert.strictEqual(electronics.length, 2);
+    assert.strictEqual(electronics.total, 3);
   });
 
   test('authenticateUser returns token for valid credentials', () => {
