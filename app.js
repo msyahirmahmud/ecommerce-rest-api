@@ -2,8 +2,6 @@
  * E-Commerce REST API Core Service Module
  */
 
-const http = require('http');
-
 class ECommerceService {
   constructor() {
     this.products = [
@@ -11,6 +9,10 @@ class ECommerceService {
       { id: 2, name: "Ergonomic Desk Chair", category: "Furniture", price: 299.00, stock: 12 },
       { id: 3, name: "Wireless Noise-Canceling Headphones", category: "Electronics", price: 199.50, stock: 30 }
     ];
+    this.promos = {
+      "DEV10": 0.10,
+      "SAVE20": 0.20
+    };
     this.users = [
       { id: 1, email: "admin@example.com", password: "password123", token: "jwt-token-admin-secret" }
     ];
@@ -20,6 +22,14 @@ class ECommerceService {
   getProducts(category = null) {
     if (!category) return this.products;
     return this.products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+  }
+
+  applyPromoCode(code, subtotal) {
+    const discountRate = this.promos[code.toUpperCase()];
+    if (!discountRate) throw new Error("Invalid promo code");
+    const discountAmount = parseFloat((subtotal * discountRate).toFixed(2));
+    const total = parseFloat((subtotal - discountAmount).toFixed(2));
+    return { promoCode: code, discountRate, discountAmount, total };
   }
 
   getProductById(id) {
