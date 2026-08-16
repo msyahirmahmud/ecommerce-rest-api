@@ -11,6 +11,10 @@ class ECommerceService {
       { id: 4, name: "Ultra-Wide Monitor 34-inch", category: "Electronics", price: 549.99, stock: 8 },
       { id: 5, name: "Adjustable Standing Desk", category: "Furniture", price: 420.00, stock: 15 }
     ];
+    this.promos = {
+      "DEV10": 0.10,
+      "SAVE20": 0.20
+    };
     this.users = [
       { id: 1, email: "admin@example.com", password: "password123", token: "jwt-token-admin-secret" }
     ];
@@ -33,6 +37,14 @@ class ECommerceService {
       totalPages: Math.ceil(filtered.length / limit),
       data: paginated
     };
+  }
+
+  applyPromoCode(code, subtotal) {
+    const discountRate = this.promos[code.toUpperCase()];
+    if (!discountRate) throw new Error("Invalid promo code");
+    const discountAmount = parseFloat((subtotal * discountRate).toFixed(2));
+    const total = parseFloat((subtotal - discountAmount).toFixed(2));
+    return { promoCode: code, discountRate, discountAmount, total };
   }
 
   getProductById(id) {

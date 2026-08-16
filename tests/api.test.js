@@ -11,6 +11,13 @@ describe('E-Commerce REST API Unit Tests', () => {
     assert.strictEqual(res.totalPages, 3);
   });
 
+  test('applyPromoCode calculates discount total correctly', () => {
+    const service = new ECommerceService();
+    const res = service.applyPromoCode('SAVE20', 100.00);
+    assert.strictEqual(res.discountAmount, 20.00);
+    assert.strictEqual(res.total, 80.00);
+  });
+
   test('getProducts filters by category', () => {
     const service = new ECommerceService();
     const electronics = service.getProducts('Electronics');
