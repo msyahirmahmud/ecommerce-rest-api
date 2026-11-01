@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/msyahirmahmud/ecommerce-rest-api/actions/workflows/ci.yml/badge.svg)](https://github.com/msyahirmahmud/ecommerce-rest-api/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org)
-[![Tests Passing](https://img.shields.io/badge/Tests-100%25-brightgreen.svg)]()
 
 > RESTful E-Commerce Microservice API supporting JWT authentication, category filtering, cart management, and health check diagnostics.
 
